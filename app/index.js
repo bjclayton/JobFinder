@@ -10,7 +10,7 @@ import {
     Welcome,
 } from "../components";
 
-const Home = () => {
+const index = () => {
     const router = useRouter()
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -47,12 +47,12 @@ const Home = () => {
                         }}
                     />
 
-                    <Popularjobs />
+                    {/* <Popularjobs /> */}
                     <Nearbyjobs />
                 </View>
             </ScrollView>
-        </SafeAreaView>
-    );
-};
+        </SafeAreaView >
+    )
+}
 
-export default Home;
+export default index
