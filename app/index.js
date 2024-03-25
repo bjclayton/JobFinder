@@ -47,7 +47,7 @@ const index = () => {
                         }}
                     />
 
-                    {/* <Popularjobs /> */}
+                    <Popularjobs />
                     <Nearbyjobs />
                 </View>
             </ScrollView>
