@@ -9,14 +9,9 @@ import {
 import styles from "./nearbyjobs.style";
 import { COLORS } from "../../../constants";
 import NearbyJobCard from "../../common/cards/nearby/NearbyJobCard";
-import useFetch from "../../../hook/useFetch";
 
-const Nearbyjobs = () => {
+const Nearbyjobs = ({ data, isLoading, error }) => {
   const router = useRouter();
-  const { data, isLoading, error } = useFetch("search", {
-    query: 'Python developer in Texas, USA',
-    num_pages: '1'
-  });
 
   return (
     <View style={styles.container}>

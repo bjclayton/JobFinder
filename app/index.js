@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { useCallback, useState } from "react";
+import { RefreshControl, SafeAreaView, ScrollView, View, } from "react-native";
 import { Stack, useRouter } from "expo-router";
-
 import { COLORS, icons, images, SIZES } from "../constants";
 import {
     Nearbyjobs,
@@ -9,10 +8,23 @@ import {
     ScreenHeaderBtn,
     Welcome,
 } from "../components";
+import useFetch from "../hook/useFetch";
 
 const index = () => {
     const router = useRouter()
     const [searchTerm, setSearchTerm] = useState("");
+    const [refreshing, setRefreshing] = useState(false);
+
+    const { data, isLoading, error, refetch } = useFetch("search", {
+        query: 'Python developer in Texas, USA',
+        num_pages: '1'
+    });
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        refetch()
+        setRefreshing(false)
+    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -30,7 +42,15 @@ const index = () => {
                 }}
             />
 
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 <View
                     style={{
                         flex: 1,
@@ -47,8 +67,17 @@ const index = () => {
                         }}
                     />
 
-                    <Popularjobs />
-                    <Nearbyjobs />
+                    <Popularjobs
+                        data={data}
+                        isLoading={isLoading}
+                        error={error}
+                    />
+
+                    <Nearbyjobs
+                        data={data}
+                        isLoading={isLoading}
+                        error={error}
+                    />
                 </View>
             </ScrollView>
         </SafeAreaView >
